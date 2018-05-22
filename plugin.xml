@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run
+               class="studentlog.Application">
+         </run>
+      </application>
+   </extension>
+   
+   <extension
+         id="menu:org.eclipse.ui.main.menu"
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            name="StudentLog Perspective"
+            class="studentlog.Perspective"
+            id="studentlog.perspective">
+      </perspective>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="studentlog.views.StudentsView"
+            icon="resources/icons/eclipse_logo/eclipse16.png"
+            id="studentlog.views.students"
+            name="Students"
+            restorable="true">
+      </view>
+   </extension>
+   
+   <extension
+         point="org.eclipse.core.runtime.products">
+      <product
+          application="StudentLog.product2"
+          name="Current Date">
+      	<property
+        	name="windowImage"
+        	value="icons/logo.png">
+        </property>
+       </product>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.eclipse.ui.main.menu">
+         <menu
+               id="fileMenu"
+               label="File">
+            <command
+                  commandId="studentlog.commands.Exit"
+                  icon="resources/icons/menubar/exit.png"
+                  label="Exit"
+                  style="push">
+            </command>
+            <command
+                  commandId="studentlog.commands.Save"
+                  icon="resources/icons/menubar/floppy.png"
+                  label="Save"
+                  style="push">
+            </command>
+         </menu>
+         <menu
+               id="editMenu"
+               label="Edit">
+            <command
+                  commandId="studentlog.commands.Delete"
+                  icon="resources/icons/menubar/basket16x16.png"
+                  label="Delete"
+                  style="push">
+            </command>
+         </menu>
+         <menu
+               id="aboutMenu"
+               label="About">
+            <command
+                  commandId="studentlog.commands.About"
+                  icon="resources/icons/menubar/book16x16.png"
+                  label="About"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+      
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.eclipse.ui.main.toolbar">
+         <toolbar
+               id="studentlog.commands.Toolbar"
+               label="Toolbar">
+            <command
+                  commandId="studentlog.commands.Open"
+                  icon="resources/icons/toolbar/folder32x32.png"
+                  label="Open"
+                  style="push"
+                  tooltip="Open log from file">
+            </command>
+            <command
+                  commandId="studentlog.commands.Save"
+                  icon="resources/icons/toolbar/floppy32x32.png"
+                  label="Save"
+                  style="push"
+                  tooltip="Save the log to the file">
+            </command>
+            <command
+                  commandId="studentlog.commands.Delete"
+                  icon="resources/icons/toolbar/basket32x32.png"
+                  label="Delete"
+                  style="push"
+                  tooltip="Delete students entry">
+            </command>
+            <command
+                  commandId="studentlog.commands.AddStudent"
+                  icon="resources/icons/toolbar/plus32x32.png"
+                  label="AddStudent"
+                  style="push"
+                  tooltip="Add students entry">
+            </command>
+            <command
+                  commandId="studentlog.commands.OpenProfile"
+                  icon="resources/icons/toolbar/user 32x32.png"
+                  label="OpenProfile"
+                  style="push"
+                  tooltip="Open students profile">
+            </command>
+         </toolbar>
+      </menuContribution>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="studentlog.commands.DeleteHandler"
+            id="studentlog.commands.Delete"
+            name="Delete">
+      </command> <command
+            defaultHandler="studentlog.commands.ExitHandler"
+            id="studentlog.commands.Exit"
+            name="Exit">
+      </command>
+      <command
+            defaultHandler="studentlog.commands.SaveHandler"
+            id="studentlog.commands.Save"
+            name="Save">
+      </command>
+      <command
+            defaultHandler="studentlog.commands.AboutHandler"
+            id="studentlog.commands.About"
+            name="About">
+      </command>
+      <command
+            defaultHandler="studentlog.commands.OpenHandler"
+            id="studentlog.commands.Open"
+            name="Open">
+      </command>
+      <command
+            defaultHandler="studentlog.commands.AddStudentHandler"
+            id="studentlog.commands.AddStudent"
+            name="AddStudent">
+      </command>
+      <command
+            defaultHandler="studentlog.commands.OpenProfileHandler"
+            id="studentlog.commands.OpenProfile"
+            name="OpenProfile">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="studentlog.editors.StudentProfileEditor"
+            default="false"
+            icon="resources/icons/tree/head.png"
+            id="studentlog.editors.studentprofile"
+            name="StudentProfile">
+      </editor>
+   </extension>
+
+</plugin>
