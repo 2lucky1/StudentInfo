@@ -55,6 +55,8 @@ public class StudentsView extends ViewPart implements Observer {
 		        event.data = jsonStr;
 		      }
 		    });
+		
+		
 	}
 
 	@Override
