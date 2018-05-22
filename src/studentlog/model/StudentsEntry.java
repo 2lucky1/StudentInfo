@@ -94,6 +94,4 @@ public class StudentsEntry implements ITreeItem {
 	public void setParent(StudentsGroup parent) {
 		this.parent = parent;
 	}
-
-
 }

@@ -1,12 +1,11 @@
 package studentlog.commands;
 
-import java.util.List;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPage;
@@ -17,31 +16,30 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import studentlog.dialogs.AddGroupDialog;
 import studentlog.dialogs.AddStudentDialog;
 import studentlog.model.Folder;
-import studentlog.model.ITreeItem;
-import studentlog.model.Root;
 import studentlog.model.StudentsEntry;
 import studentlog.model.StudentsGroup;
-import studentlog.model.TreeModel;
 import studentlog.views.StudentsView;
 
 public class AddStudentHandler extends AbstractHandler implements ISelectionListener {
 
 	private static final String GROUP = "Group";
-	private IStructuredSelection selection;
-	private Root root;
+	private TreeViewer treeViewer;
+	private ISelection selection;
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		System.out.println("Add menu");
-
-		root = TreeModel.getInstance().getRoot();
-
 		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindow(event);
+		
 		IWorkbenchPage page = window.getActivePage();
+		
 		StudentsView view = (StudentsView) page.findView(StudentsView.ID);
-		// Get the selection
-		ISelection selection = view.getSite().getSelectionProvider().getSelection();
+		
+		treeViewer = view.getTreeViewer();
+		
+		selection = treeViewer.getSelection();
+		
 		Object item = ((IStructuredSelection) selection).getFirstElement();
+		
 		if (item instanceof Folder) {
 			AddGroupDialog agd = new AddGroupDialog(window.getShell());
 			
@@ -51,9 +49,7 @@ public class AddStudentHandler extends AbstractHandler implements ISelectionList
 				String groupName = GROUP + agd.getGroupNumber();
 				StudentsGroup studentsGroup = new StudentsGroup((Folder) item, groupName);
 				folder.addEntry(studentsGroup);
-//				newRoot = addItemToRoot(folder, studentsGroup);
-//				TreeModel.getInstance().setRoot(newRoot);
-				view.update(root);
+				treeViewer.refresh();
 				return null;
 			}
 		} else if (item instanceof StudentsGroup) {
@@ -65,30 +61,11 @@ public class AddStudentHandler extends AbstractHandler implements ISelectionList
 				StudentsEntry entry = new StudentsEntry(asd.getName(), group.getName(), asd.getAddress(), asd.getCity(),
 						asd.getResult(), group);
 				group.addEntry(entry);
-				view.update(root);
-//				newRoot = addItemToRoot(group, entry);
-//				TreeModel.getInstance().setRoot(newRoot);
+				treeViewer.refresh();
 				return null;
 			}
 		}
 		return null;
-	}
-
-	public Root addItemToRoot(ITreeItem selectedItem, ITreeItem addedItem) {
-		List<Folder> folders = root.getChildren();
-		for (Folder folder : folders) {
-			if (folder.getName().equals(selectedItem.getName())) {
-				folder.addEntry((StudentsGroup) addedItem);
-				return root;
-			}
-			for (StudentsGroup studentsGroup : folder.getChildren()) {
-				if (studentsGroup.getName().equals(selectedItem.getName())) {
-					studentsGroup.addEntry((StudentsEntry) addedItem);
-					return root;
-				}
-			}
-		}
-		return root;
 	}
 
 	@Override

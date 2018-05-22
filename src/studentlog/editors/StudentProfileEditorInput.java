@@ -49,7 +49,6 @@ public class StudentProfileEditorInput implements IEditorInput{
 	public String getToolTipText() {
 		return null;
 	}
-
 	
 	public boolean equals(Object obj) {
 		if (super.equals(obj)) return true;

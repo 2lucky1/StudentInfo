@@ -13,7 +13,7 @@ public class StudentsGroup implements ITreeItem {
 
 	private List<StudentsEntry> children = new ArrayList<StudentsEntry>();
 
-	transient private ListenerList listeners;
+	transient private ListenerList<IStudentsListener> listeners;
 
 
 	public StudentsGroup() {
@@ -44,11 +44,11 @@ public class StudentsGroup implements ITreeItem {
 		return children;
 	}
 
-	public ListenerList getListeners() {
+	public ListenerList<IStudentsListener> getListeners() {
 		return listeners;
 	}
 
-	public void setListeners(ListenerList listeners) {
+	public void setListeners(ListenerList<IStudentsListener> listeners) {
 		this.listeners = listeners;
 	}
 
@@ -87,7 +87,7 @@ public class StudentsGroup implements ITreeItem {
 			parent.addStudentsListener(listener);
 		} else {
 			if (listeners == null)
-				listeners = new ListenerList();
+				listeners = new ListenerList<IStudentsListener>();
 			listeners.add(listener);
 		}
 	}

@@ -7,10 +7,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
-import java.lang.reflect.Type;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import studentlog.model.Folder;
 import studentlog.model.Root;
