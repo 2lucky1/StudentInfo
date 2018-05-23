@@ -57,6 +57,7 @@ public class TreeModel implements Observable {
 
 	private void initTreeModel() {
 		logFileAccessManager = new LogFileAccessManager();
+		System.out.println(getLogFilePath());
 		root = logFileAccessManager.readLogItemsFromFile(getLogFilePath());
 		setRoot(root);
 		
