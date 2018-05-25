@@ -12,14 +12,20 @@ import org.eclipse.swt.dnd.DragSourceEvent;
 import org.eclipse.swt.dnd.DragSourceListener;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.part.EditorInputTransfer;
 import org.eclipse.ui.part.ViewPart;
+import org.eclipse.ui.services.ISourceProviderService;
 
 import com.google.gson.Gson;
 
+import studentlog.commands.OpenProfileHandler;
 import studentlog.editors.StudentProfileEditor;
 import studentlog.editors.StudentProfileEditorInput;
 import studentlog.model.ITreeItem;
@@ -83,11 +89,43 @@ public class StudentsView extends ViewPart implements Observer {
 				}// TODO Auto-generated method stub
 
 			}
+			
+			
 
 			@Override
 			public void dragFinished(DragSourceEvent event) {
 				// TODO Auto-generated method stub
 
+			}
+		});
+		
+		
+//		treeViewer.getTree().addSelectionListener(new SelectionAdapter() {
+//			@Override
+//			public void widgetSelected(SelectionEvent e) {
+//				TreeItem item = (TreeItem) e.item;
+//				ITreeItem node = (ITreeItem) item.getData();
+//
+//				ISourceProviderService service = (ISourceProviderService) PlatformUI.getWorkbench()
+//						.getService(ISourceProviderService.class);
+//
+//				CommandStateProvider sourceProvider = (CommandStateProvider) service.getSourceProvider("isFolder");
+//
+//				// if it's not folder-disable icons
+//				if (node.isFolder()) {
+//					sourceProvider.setFolder();
+//				} else {
+//					sourceProvider.setFile();
+//				}
+//			}
+//		});
+
+		treeViewer.addDoubleClickListener((event) -> {
+			IHandlerService handlerService = getSite().getService(IHandlerService.class);
+			try {
+				handlerService.executeCommand(OpenProfileHandler.ID, null);
+			} catch (Exception ex) {
+				throw new RuntimeException(ex.getMessage());
 			}
 		});
 

@@ -17,6 +17,7 @@ import studentlog.views.StudentsView;
 
 public class OpenProfileHandler extends AbstractHandler {
 
+	public static final String ID = "studentlog.commands.OpenProfile";
 	private IWorkbenchWindow window;
 	private ISelection selection;
 
