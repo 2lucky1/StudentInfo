@@ -26,11 +26,11 @@ public class OpenHandler extends AbstractHandler {
         String[] filterExt = { "*.json","*.txt", "*.doc", ".rtf", "*.*" };
         fd.setFilterExtensions(filterExt);
         String selectedFilePath = fd.open();
-        
+        if(selectedFilePath!=null){
         LogFileAccessManager logFileAccessManager = new LogFileAccessManager();
 		Root root = logFileAccessManager.readLogItemsFromFile(selectedFilePath);
 		TreeModel.getInstance().setRoot(root);
-		
+        }
 		return null;
 	}
 
