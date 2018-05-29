@@ -28,10 +28,12 @@ import com.google.gson.Gson;
 import studentlog.commands.OpenProfileHandler;
 import studentlog.editors.StudentProfileEditor;
 import studentlog.editors.StudentProfileEditorInput;
+import studentlog.model.Folder;
 import studentlog.model.ITreeItem;
 import studentlog.model.Observer;
 import studentlog.model.Root;
 import studentlog.model.StudentsEntry;
+import studentlog.model.StudentsGroup;
 import studentlog.model.TreeModel;
 import studentlog.tree_providers.CustomTreeContentProvider;
 import studentlog.tree_providers.CustomTreeLabelProvider;
@@ -43,6 +45,8 @@ public class StudentsView extends ViewPart implements Observer {
 	private TreeViewer treeViewer;
 
 	private Root root;
+
+	private IStructuredSelection selection;
 
 	public StudentsView() {
 		super();
@@ -64,7 +68,7 @@ public class StudentsView extends ViewPart implements Observer {
 
 			@Override
 			public void dragStart(DragSourceEvent event) {
-				
+
 			}
 
 			@Override
@@ -72,7 +76,7 @@ public class StudentsView extends ViewPart implements Observer {
 				if (EditorInputTransfer.getInstance().isSupportedType(event.dataType)) { // if
 					// support
 					// EditorInputTransfer
-					IStructuredSelection selection = treeViewer.getStructuredSelection();
+					selection = treeViewer.getStructuredSelection();
 					int i = 0;
 					EditorInputTransfer.EditorInputData[] arrData = new EditorInputTransfer.EditorInputData[selection
 							.size()];
@@ -86,11 +90,9 @@ public class StudentsView extends ViewPart implements Observer {
 						}
 					}
 					event.data = arrData;
-				}// TODO Auto-generated method stub
+				} // TODO Auto-generated method stub
 
 			}
-			
-			
 
 			@Override
 			public void dragFinished(DragSourceEvent event) {
@@ -98,91 +100,106 @@ public class StudentsView extends ViewPart implements Observer {
 
 			}
 		});
-		
-		
-//		treeViewer.getTree().addSelectionListener(new SelectionAdapter() {
-//			@Override
-//			public void widgetSelected(SelectionEvent e) {
-//				TreeItem item = (TreeItem) e.item;
-//				ITreeItem node = (ITreeItem) item.getData();
-//
-//				ISourceProviderService service = (ISourceProviderService) PlatformUI.getWorkbench()
-//						.getService(ISourceProviderService.class);
-//
-//				CommandStateProvider sourceProvider = (CommandStateProvider) service.getSourceProvider("isFolder");
-//
-//				// if it's not folder-disable icons
-//				if (node.isFolder()) {
-//					sourceProvider.setFolder();
-//				} else {
-//					sourceProvider.setFile();
-//				}
-//			}
-//		});
+
+		// treeViewer.getTree().addSelectionListener(new SelectionAdapter() {
+		// @Override
+		// public void widgetSelected(SelectionEvent e) {
+		// TreeItem item = (TreeItem) e.item;
+		// ITreeItem node = (ITreeItem) item.getData();
+		//
+		// ISourceProviderService service = (ISourceProviderService)
+		// PlatformUI.getWorkbench()
+		// .getService(ISourceProviderService.class);
+		//
+		// CommandStateProvider sourceProvider = (CommandStateProvider)
+		// service.getSourceProvider("isFolder");
+		//
+		// // if it's not folder-disable icons
+		// if (node.isFolder()) {
+		// sourceProvider.setFolder();
+		// } else {
+		// sourceProvider.setFile();
+		// }
+		// }
+		// });
 
 		treeViewer.addDoubleClickListener((event) -> {
+			selection = treeViewer.getStructuredSelection();
 			IHandlerService handlerService = getSite().getService(IHandlerService.class);
-			try {
-				handlerService.executeCommand(OpenProfileHandler.ID, null);
-			} catch (Exception ex) {
-				throw new RuntimeException(ex.getMessage());
+			Object entry = selection.getFirstElement();
+			if (entry instanceof StudentsEntry) {
+				try {
+					handlerService.executeCommand(OpenProfileHandler.ID, null);
+				} catch (Exception ex) {
+					throw new RuntimeException(ex.getMessage());
+				}
+			} else if(entry instanceof StudentsGroup || entry instanceof Folder){
+				TreeItem treeItem = treeViewer.getTree().getSelection()[0];
+				if(treeItem.getExpanded()){
+					treeItem.setExpanded(false);
+				}else{
+					treeItem.setExpanded(true);
+					treeViewer.refresh();
+				}
+				
 			}
 		});
 
-		// DragSource ds = new DragSource(treeViewer.getTree(), DND.DROP_MOVE);
-		// // DragSource ds = new DragSource(treeViewer.getTree(),
-		// DND.DROP_MOVE);
-		//
-		// ds.setTransfer(new Transfer[] {TextTransfer.getInstance()});
-		// ds.addDragListener(new DragSourceAdapter() {
-		// public void dragSetData(DragSourceEvent event) {
-		// IStructuredSelection selection = treeViewer.getStructuredSelection();
-		// StudentsEntry firstElement =
-		// (StudentsEntry)selection.getFirstElement();
-		// Gson gson = new Gson();
-		// String jsonStr = gson.toJson(firstElement);
-		// event.data = jsonStr;
-		// }
-		// });
-		// int operations = DND.DROP_COPY | DND.DROP_MOVE ;
-		// Transfer[] transferTypes = new Transfer[] {
-		// EditorInputTransfer.getInstance() };
-		// // ds.setTransfer(transferTypes);
-		// // ds.setTransfer(new Transfer[] {TextTransfer.getInstance()});
-		// treeViewer.addDragSupport(operations, transferTypes, new
-		// NodeDragListener(treeViewer));
-		// // ds.addDragListener(new DragSourceAdapter() {
-		// // public void dragSetData(DragSourceEvent event) {
-		// // IStructuredSelection selection =
-		// treeViewer.getStructuredSelection();
-		// // StudentsEntry firstElement =
-		// (StudentsEntry)selection.getFirstElement();
-		// // Gson gson = new Gson();
-		// // String jsonStr = gson.toJson(firstElement);
-		// // event.data = jsonStr;
-		// //
-		// //// IStructuredSelection selection =
-		// viewer.getStructuredSelection();
-		// // int i=0;
-		// // EditorInputTransfer.EditorInputData[] arrData=new
-		// EditorInputTransfer.EditorInputData[selection.size()];
-		// // Iterator<?> iterator=selection.iterator();
-		// // while(iterator.hasNext()){
-		// // TreeItem node=(TreeItem)iterator.next();
-		// // if (node instanceof ITreeItem) {
-		// // IEditorInput input = new StudentProfileEditorInput(((ITreeItem)
-		// node).getName());
-		// //
-		// arrData[i]=EditorInputTransfer.createEditorInputData(StudentProfileEditor.ID,
-		// input);
-		// // i;
-		// // }
-		// // }
-		// // event.data=arrData;
-		// // }
-		// // });
-		//
-		//
+	// treeViewer.getTree().addMouseListener(listener);
+	// DragSource ds = new DragSource(treeViewer.getTree(), DND.DROP_MOVE);
+	// // DragSource ds = new DragSource(treeViewer.getTree(),
+	// DND.DROP_MOVE);
+	//
+	// ds.setTransfer(new Transfer[] {TextTransfer.getInstance()});
+	// ds.addDragListener(new DragSourceAdapter() {
+	// public void dragSetData(DragSourceEvent event) {
+	// IStructuredSelection selection = treeViewer.getStructuredSelection();
+	// StudentsEntry firstElement =
+	// (StudentsEntry)selection.getFirstElement();
+	// Gson gson = new Gson();
+	// String jsonStr = gson.toJson(firstElement);
+	// event.data = jsonStr;
+	// }
+	// });
+	// int operations = DND.DROP_COPY | DND.DROP_MOVE ;
+	// Transfer[] transferTypes = new Transfer[] {
+	// EditorInputTransfer.getInstance() };
+	// // ds.setTransfer(transferTypes);
+	// // ds.setTransfer(new Transfer[] {TextTransfer.getInstance()});
+	// treeViewer.addDragSupport(operations, transferTypes, new
+	// NodeDragListener(treeViewer));
+	// // ds.addDragListener(new DragSourceAdapter() {
+	// // public void dragSetData(DragSourceEvent event) {
+	// // IStructuredSelection selection =
+	// treeViewer.getStructuredSelection();
+	// // StudentsEntry firstElement =
+	// (StudentsEntry)selection.getFirstElement();
+	// // Gson gson = new Gson();
+	// // String jsonStr = gson.toJson(firstElement);
+	// // event.data = jsonStr;
+	// //
+	// //// IStructuredSelection selection =
+	// viewer.getStructuredSelection();
+	// // int i=0;
+	// // EditorInputTransfer.EditorInputData[] arrData=new
+	// EditorInputTransfer.EditorInputData[selection.size()];
+	// // Iterator<?> iterator=selection.iterator();
+	// // while(iterator.hasNext()){
+	// // TreeItem node=(TreeItem)iterator.next();
+	// // if (node instanceof ITreeItem) {
+	// // IEditorInput input = new StudentProfileEditorInput(((ITreeItem)
+	// node).getName());
+	// //
+	// arrData[i]=EditorInputTransfer.createEditorInputData(StudentProfileEditor.ID,
+	// input);
+	// // i;
+	// // }
+	// // }
+	// // event.data=arrData;
+	// // }
+	// // });
+	//
+	//
 	}
 
 	public TreeViewer getTreeViewer() {
