@@ -2,6 +2,11 @@ package studentlog.views;
 
 import java.util.Iterator;
 
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.GroupMarker;
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
@@ -15,8 +20,10 @@ import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.part.EditorInputTransfer;
@@ -62,6 +69,13 @@ public class StudentsView extends ViewPart implements Observer {
 		root = TreeModel.getInstance().getRoot();
 		treeViewer.setInput(root);
 
+//		createContextMenu(treeViewer);
+		MenuManager menuManager = new MenuManager();
+        Menu menu = menuManager.createContextMenu(treeViewer.getTree());
+        treeViewer.getTree().setMenu(menu);
+		getSite().registerContextMenu(menuManager, treeViewer);
+		getSite().setSelectionProvider(treeViewer);
+		
 		int operations = DND.DROP_COPY | DND.DROP_MOVE;
 		Transfer[] transferTypes = new Transfer[] { EditorInputTransfer.getInstance() };
 		treeViewer.addDragSupport(operations, transferTypes, new DragSourceListener() {
@@ -182,6 +196,49 @@ public class StudentsView extends ViewPart implements Observer {
 
 	public TreeViewer getTreeViewer() {
 		return treeViewer;
+	}
+	
+	protected void createContextMenu(TreeViewer treeViewer) {
+	    MenuManager contextMenu = new MenuManager("#ViewerMenu"); //$NON-NLS-1$
+	    contextMenu.setRemoveAllWhenShown(true);
+	    contextMenu.addMenuListener(new IMenuListener() {
+	        @Override
+	        public void menuAboutToShow(IMenuManager mgr) {
+	            fillContextMenu(mgr);
+	        }
+	    });
+
+	    Menu menu = contextMenu.createContextMenu(treeViewer.getControl());
+	    treeViewer.getControl().setMenu(menu);
+	}
+
+	/**
+	 * Fill dynamic context menu
+	 *
+	 * @param contextMenu
+	 */
+	protected void fillContextMenu(IMenuManager contextMenu) {
+		IHandlerService handlerService = getSite().getService(IHandlerService.class);
+	    contextMenu.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
+
+	    contextMenu.add(new Action("Do Something") {
+	        @Override
+	        public void run() {
+	            // implement this
+	        }
+	    });
+	    contextMenu.add(new Action("Do Nothing") {
+	        @Override
+	        public void run() {
+	            // don't do anything here
+	        }
+	    });
+	    contextMenu.add(new Action("Delete") {
+	        @Override
+	        public void run() {
+	            // implement this
+	        }
+	    });
 	}
 
 ////	private class NodeDragListener implements DragSourceListener {

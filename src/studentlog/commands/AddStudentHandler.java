@@ -11,6 +11,7 @@ import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 import studentlog.dialogs.AddGroupDialog;
@@ -29,6 +30,7 @@ public class AddStudentHandler extends AbstractHandler implements ISelectionList
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindow(event);
+		//IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 		
 		IWorkbenchPage page = window.getActivePage();
 		

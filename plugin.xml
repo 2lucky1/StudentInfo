@@ -131,6 +131,47 @@
             </command>
          </toolbar>
       </menuContribution>
+      
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any">
+         <command
+               commandId="studentlog.commands.AddStudent"
+               icon="resources/icons/menubar/plus16x16.png"
+               mnemonic="%contributions.view.edit.mnemonic">
+            <visibleWhen>
+               <with
+                     variable="activeMenuSelection">
+                  <iterate>
+                     <adapt
+                           type="studentlog.model.StudentsGroup">
+                     </adapt>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="studentlog.commands.Delete"
+               icon="resources/icons/menubar/basket16x16.png"
+               label="Delete"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeMenuSelection">
+               </with>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="studentlog.commands.OpenProfile"
+               label="Open profile"
+               style="push">
+            <visibleWhen>
+               <with
+                     variable="activeMenuSelection">
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
    </extension>
    
    <extension
