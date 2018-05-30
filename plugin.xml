@@ -163,11 +163,17 @@
          </command>
          <command
                commandId="studentlog.commands.OpenProfile"
+               icon="resources/icons/menubar/user16x16.png"
                label="Open profile"
                style="push">
             <visibleWhen>
                <with
                      variable="activeMenuSelection">
+                  <iterate>
+                     <adapt
+                           type="studentlog.model.StudentsEntry">
+                     </adapt>
+                  </iterate>
                </with>
             </visibleWhen>
          </command>
