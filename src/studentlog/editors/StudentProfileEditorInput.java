@@ -1,24 +1,26 @@
 package studentlog.editors;
 
-import org.eclipse.core.runtime.Assert;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IPersistableElement;
 
-public class StudentProfileEditorInput implements IEditorInput{
+import studentlog.model.StudentsEntry;
 
+public class StudentProfileEditorInput implements IEditorInput {
+	private final static String FACTORY_ID = "rcpapp.StudentProfileEditorInputFactory";
+	public final static String FEATURE_ID = "featureId";
+	private final StudentsEntry studentsEntry;
 	private String partisipant;
-	
-	public StudentProfileEditorInput(String partisipant) {
-		super();
-		Assert.isNotNull(partisipant);
-		this.partisipant = partisipant;
+
+	public StudentProfileEditorInput(StudentsEntry studentsEntry) {
+		this.studentsEntry = studentsEntry;
 	}
-	
-	public StudentProfileEditorInput() {
-		
+
+	public StudentsEntry getStudentsEntry() {
+		return studentsEntry;
 	}
-	
+
 	@Override
 	public <T> T getAdapter(Class<T> adapter) {
 		// TODO Auto-generated method stub
@@ -27,7 +29,7 @@ public class StudentProfileEditorInput implements IEditorInput{
 
 	@Override
 	public boolean exists() {
-		return false;
+		return true;
 	}
 
 	@Override
@@ -37,12 +39,20 @@ public class StudentProfileEditorInput implements IEditorInput{
 
 	@Override
 	public String getName() {
-		return partisipant;
+		return studentsEntry.getName();
 	}
 
 	@Override
 	public IPersistableElement getPersistable() {
-		return null;
+		return new IPersistableElement() {
+			public String getFactoryId() {
+				return FACTORY_ID;
+			}
+
+			public void saveState(IMemento memento) {
+				memento.putString(FEATURE_ID, studentsEntry.fullPath());
+			}
+		};
 	}
 
 	@Override
@@ -50,14 +60,18 @@ public class StudentProfileEditorInput implements IEditorInput{
 		return null;
 	}
 	
+	
+
 	public boolean equals(Object obj) {
-		if (super.equals(obj)) return true;
+		if (super.equals(obj))
+			return true;
 		if (!(obj instanceof StudentProfileEditorInput))
-		return false;
+			return false;
 		StudentProfileEditorInput other = (StudentProfileEditorInput) obj;
 		return partisipant.equals(other.partisipant);
-		}
-		public int hashCode() {
+	}
+
+	public int hashCode() {
 		return partisipant.hashCode();
-		}
+	}
 }

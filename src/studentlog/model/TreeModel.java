@@ -3,6 +3,7 @@ package studentlog.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import rcpapp.model.Node;
 import studentlog.services.LogFileAccessManager;
 import studentlog.services.ProjectPathFinder;
 
@@ -41,6 +42,22 @@ public class TreeModel implements Observable {
 			observer.update(root);
 		}
 	}
+	
+	public ITreeItem findNodeByPath(ITreeItem studentsEntry, String path) {
+		boolean isPoint = (path.indexOf("/") == -1) ? true : false; //true-it's target
+		String name=path.split("/")[0]; //name node 
+		ITreeItem currentNode=(ITreeItem) studentsEntry.getChildren()
+			.stream()
+			.filter(c->c.getName().equals(name))
+			.findFirst().orElse(null);
+		return (isPoint)?currentNode:findNodeByPath(currentNode,path.substring(name.length()+1, path.length()));
+		
+	}
+	
+	
+	
+	
+	
 
 	public Root getRoot() {
 		return root;

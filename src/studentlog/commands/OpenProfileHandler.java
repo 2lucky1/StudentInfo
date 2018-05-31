@@ -32,7 +32,7 @@ public class OpenProfileHandler extends AbstractHandler {
 			Object item = ((IStructuredSelection) selection).getFirstElement();
 			if (item != null) {
 				StudentsEntry entry = (StudentsEntry) item;
-				StudentProfileEditorInput input = new StudentProfileEditorInput(entry.getName());
+				StudentProfileEditorInput input = new StudentProfileEditorInput(entry);
 				try {					
 					StudentProfileEditor editor = (StudentProfileEditor)page.openEditor(input, StudentProfileEditor.ID);
 					editor.fillEditorArea(entry);

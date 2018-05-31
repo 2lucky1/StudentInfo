@@ -85,6 +85,29 @@ public class StudentsView extends ViewPart implements Observer {
 
 			}
 
+//			@Override
+//			public void dragSetData(DragSourceEvent event) {
+//				if (EditorInputTransfer.getInstance().isSupportedType(event.dataType)) { // if
+//					// support
+//					// EditorInputTransfer
+//					selection = treeViewer.getStructuredSelection();
+//					int i = 0;
+//					EditorInputTransfer.EditorInputData[] arrData = new EditorInputTransfer.EditorInputData[selection.size()];//selection.size()
+//					Iterator<?> iterator = selection.iterator();
+//					while (iterator.hasNext()) {
+//						StudentsEntry node = (StudentsEntry) iterator.next();
+//						if (node instanceof StudentsEntry) {
+//							IEditorInput input = new StudentProfileEditorInput(((StudentsEntry) node).getName());
+//							arrData[i] = EditorInputTransfer.createEditorInputData(StudentProfileEditor.ID, input);
+//							i++;
+//						}
+//					}
+//					event.data = arrData;
+//				} // TODO Auto-generated method stub
+//
+//			}
+			
+			
 			@Override
 			public void dragSetData(DragSourceEvent event) {
 				if (EditorInputTransfer.getInstance().isSupportedType(event.dataType)) { // if
@@ -92,13 +115,12 @@ public class StudentsView extends ViewPart implements Observer {
 					// EditorInputTransfer
 					selection = treeViewer.getStructuredSelection();
 					int i = 0;
-					EditorInputTransfer.EditorInputData[] arrData = new EditorInputTransfer.EditorInputData[selection
-							.size()];
+					EditorInputTransfer.EditorInputData[] arrData = new EditorInputTransfer.EditorInputData[selection.size()];//selection.size()
 					Iterator<?> iterator = selection.iterator();
 					while (iterator.hasNext()) {
-						StudentsEntry node = (StudentsEntry) iterator.next();
-						if (node instanceof ITreeItem) {
-							IEditorInput input = new StudentProfileEditorInput(((StudentsEntry) node).getName());
+						StudentsEntry studentsEntry = (StudentsEntry) iterator.next();
+						if (studentsEntry instanceof StudentsEntry) {
+							IEditorInput input = new StudentProfileEditorInput((StudentsEntry) studentsEntry);
 							arrData[i] = EditorInputTransfer.createEditorInputData(StudentProfileEditor.ID, input);
 							i++;
 						}
