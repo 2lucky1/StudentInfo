@@ -227,5 +227,12 @@
             name="StudentProfile">
       </editor>
    </extension>
+   <extension
+         point="org.eclipse.ui.elementFactories">
+      <factory
+            class="studentlog.editors.StudentProfileEditorFactory"
+            id="studentlog.StudentProfileEditorFactory">
+      </factory>
+   </extension>
 
 </plugin>

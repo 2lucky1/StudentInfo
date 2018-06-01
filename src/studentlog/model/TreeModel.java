@@ -3,7 +3,6 @@ package studentlog.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import rcpapp.model.Node;
 import studentlog.services.LogFileAccessManager;
 import studentlog.services.ProjectPathFinder;
 
@@ -43,14 +42,46 @@ public class TreeModel implements Observable {
 		}
 	}
 	
+	public ITreeItem findNodeByFullPath(String fullPath) {
+		return findNodeByPath(getRoot(), fullPath.substring(1, fullPath.length()));
+	}
+
 	public ITreeItem findNodeByPath(ITreeItem studentsEntry, String path) {
 		boolean isPoint = (path.indexOf("/") == -1) ? true : false; //true-it's target
-		String name=path.split("/")[0]; //name node 
-		ITreeItem currentNode=(ITreeItem) studentsEntry.getChildren()
-			.stream()
-			.filter(c->c.getName().equals(name))
-			.findFirst().orElse(null);
-		return (isPoint)?currentNode:findNodeByPath(currentNode,path.substring(name.length()+1, path.length()));
+		String name=path.split("/")[0]; //name node
+		List<Folder> folders = (List<Folder>) studentsEntry.getChildren(); 
+		for(Folder folder : folders) {
+			List<StudentsGroup> groups = folder.getChildren();
+			for(StudentsGroup group : groups) {
+				List<StudentsEntry> entries = group.getChildren();
+				for(StudentsEntry entry : entries) {
+					String tempPath = folder.getName() + "/" + group.getName() + "/" + entry.getName();
+					if (tempPath.equals(path)) {
+						return entry;
+					}
+				}
+			}
+		}
+		return null;
+//		List<StudentsGroup> groups = folders.get(0).getChildren();
+//		for(StudentsGroup group : groups) {
+//			System.out.println("group name: " + group.getName());
+//			if ()
+//		}
+//		groups
+//		System.out.println("#### 1: " + folders.get(0).getChildren());
+//		List<ITreeItem> list = (List<ITreeItem>) studentsEntry.getChildren();
+//		List<StudentsEntry> entries = new ArrayList<StudentsEntry>();
+//		for(ITreeItem item : list) {
+//			if (item instanceof StudentsEntry) {
+//				entries.add((StudentsEntry) item);
+//			}
+//		}
+//		ITreeItem currentNode=(ITreeItem) entries
+//			.stream()
+//			.filter(c->c.getName().equals(name))
+//			.findFirst().orElse(null);
+//		return (isPoint)?currentNode:findNodeByPath(currentNode,path.substring(name.length()+1, path.length()));
 		
 	}
 	

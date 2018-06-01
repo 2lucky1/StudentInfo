@@ -21,6 +21,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IWorkbenchActionConstants;
@@ -33,6 +34,7 @@ import org.eclipse.ui.services.ISourceProviderService;
 import com.google.gson.Gson;
 
 import studentlog.commands.OpenProfileHandler;
+import studentlog.dnd.MyDragListener;
 import studentlog.editors.StudentProfileEditor;
 import studentlog.editors.StudentProfileEditorInput;
 import studentlog.model.Folder;
@@ -42,6 +44,7 @@ import studentlog.model.Root;
 import studentlog.model.StudentsEntry;
 import studentlog.model.StudentsGroup;
 import studentlog.model.TreeModel;
+import studentlog.tree_providers.CommandStateProvider;
 import studentlog.tree_providers.CustomTreeContentProvider;
 import studentlog.tree_providers.CustomTreeLabelProvider;
 
@@ -78,13 +81,58 @@ public class StudentsView extends ViewPart implements Observer {
 		
 		int operations = DND.DROP_COPY | DND.DROP_MOVE;
 		Transfer[] transferTypes = new Transfer[] { EditorInputTransfer.getInstance() };
-		treeViewer.addDragSupport(operations, transferTypes, new DragSourceListener() {
-
-			@Override
-			public void dragStart(DragSourceEvent event) {
-
-			}
-
+		treeViewer.addDragSupport(operations, transferTypes, new MyDragListener(treeViewer));
+		
+		Tree tree = treeViewer.getTree();
+		
+//		tree.addSelectionListener(new SelectionAdapter() {
+//			@Override
+//			public void widgetSelected(SelectionEvent e) {
+//				TreeItem item = (TreeItem) e.item;
+//				StudentsEntry studentsEntry = (StudentsEntry) item.getData();
+//
+//				ISourceProviderService service = (ISourceProviderService) PlatformUI.getWorkbench()
+//						.getService(ISourceProviderService.class);
+//
+//				CommandStateProvider sourceProvider = (CommandStateProvider) service.getSourceProvider("isFolder");
+//
+//				// if it's not folder-disable icons
+//				if (node.isFolder()) {
+//					sourceProvider.setFolder();
+//				} else {
+//					sourceProvider.setFile();
+//				}
+//			}
+//		});
+//
+//			@Override
+//			public void dragStart(DragSourceEvent event) {
+//
+//			}
+//
+////			@Override
+////			public void dragSetData(DragSourceEvent event) {
+////				if (EditorInputTransfer.getInstance().isSupportedType(event.dataType)) { // if
+////					// support
+////					// EditorInputTransfer
+////					selection = treeViewer.getStructuredSelection();
+////					int i = 0;
+////					EditorInputTransfer.EditorInputData[] arrData = new EditorInputTransfer.EditorInputData[selection.size()];//selection.size()
+////					Iterator<?> iterator = selection.iterator();
+////					while (iterator.hasNext()) {
+////						StudentsEntry node = (StudentsEntry) iterator.next();
+////						if (node instanceof StudentsEntry) {
+////							IEditorInput input = new StudentProfileEditorInput(((StudentsEntry) node).getName());
+////							arrData[i] = EditorInputTransfer.createEditorInputData(StudentProfileEditor.ID, input);
+////							i++;
+////						}
+////					}
+////					event.data = arrData;
+////				} // TODO Auto-generated method stub
+////
+////			}
+//			
+//			
 //			@Override
 //			public void dragSetData(DragSourceEvent event) {
 //				if (EditorInputTransfer.getInstance().isSupportedType(event.dataType)) { // if
@@ -95,9 +143,9 @@ public class StudentsView extends ViewPart implements Observer {
 //					EditorInputTransfer.EditorInputData[] arrData = new EditorInputTransfer.EditorInputData[selection.size()];//selection.size()
 //					Iterator<?> iterator = selection.iterator();
 //					while (iterator.hasNext()) {
-//						StudentsEntry node = (StudentsEntry) iterator.next();
-//						if (node instanceof StudentsEntry) {
-//							IEditorInput input = new StudentProfileEditorInput(((StudentsEntry) node).getName());
+//						StudentsEntry studentsEntry = (StudentsEntry) iterator.next();
+//						if (studentsEntry instanceof StudentsEntry) {
+//							IEditorInput input = new StudentProfileEditorInput((StudentsEntry) studentsEntry);
 //							arrData[i] = EditorInputTransfer.createEditorInputData(StudentProfileEditor.ID, input);
 //							i++;
 //						}
@@ -106,58 +154,35 @@ public class StudentsView extends ViewPart implements Observer {
 //				} // TODO Auto-generated method stub
 //
 //			}
-			
-			
-			@Override
-			public void dragSetData(DragSourceEvent event) {
-				if (EditorInputTransfer.getInstance().isSupportedType(event.dataType)) { // if
-					// support
-					// EditorInputTransfer
-					selection = treeViewer.getStructuredSelection();
-					int i = 0;
-					EditorInputTransfer.EditorInputData[] arrData = new EditorInputTransfer.EditorInputData[selection.size()];//selection.size()
-					Iterator<?> iterator = selection.iterator();
-					while (iterator.hasNext()) {
-						StudentsEntry studentsEntry = (StudentsEntry) iterator.next();
-						if (studentsEntry instanceof StudentsEntry) {
-							IEditorInput input = new StudentProfileEditorInput((StudentsEntry) studentsEntry);
-							arrData[i] = EditorInputTransfer.createEditorInputData(StudentProfileEditor.ID, input);
-							i++;
-						}
-					}
-					event.data = arrData;
-				} // TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void dragFinished(DragSourceEvent event) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		treeViewer.addDoubleClickListener((event) -> {
-			selection = treeViewer.getStructuredSelection();
-			IHandlerService handlerService = getSite().getService(IHandlerService.class);
-			Object entry = selection.getFirstElement();
-			if (entry instanceof StudentsEntry) {
-				try {
-					handlerService.executeCommand(OpenProfileHandler.ID, null);
-				} catch (Exception ex) {
-					throw new RuntimeException(ex.getMessage());
-				}
-			} else if(entry instanceof StudentsGroup || entry instanceof Folder){
-				TreeItem treeItem = treeViewer.getTree().getSelection()[0];
-				if(treeItem.getExpanded()){
-					treeItem.setExpanded(false);
-				}else{
-					treeItem.setExpanded(true);
-					treeViewer.refresh();
-				}
-				
-			}
-		});
+//
+//			@Override
+//			public void dragFinished(DragSourceEvent event) {
+//				// TODO Auto-generated method stub
+//
+//			}
+//		});
+//
+//		treeViewer.addDoubleClickListener((event) -> {
+//			selection = treeViewer.getStructuredSelection();
+//			IHandlerService handlerService = getSite().getService(IHandlerService.class);
+//			Object entry = selection.getFirstElement();
+//			if (entry instanceof StudentsEntry) {
+//				try {
+//					handlerService.executeCommand(OpenProfileHandler.ID, null);
+//				} catch (Exception ex) {
+//					throw new RuntimeException(ex.getMessage());
+//				}
+//			} else if(entry instanceof StudentsGroup || entry instanceof Folder){
+//				TreeItem treeItem = treeViewer.getTree().getSelection()[0];
+//				if(treeItem.getExpanded()){
+//					treeItem.setExpanded(false);
+//				}else{
+//					treeItem.setExpanded(true);
+//					treeViewer.refresh();
+//				}
+//				
+//			}
+//		});
 
 	// treeViewer.getTree().addMouseListener(listener);
 	// DragSource ds = new DragSource(treeViewer.getTree(), DND.DROP_MOVE);

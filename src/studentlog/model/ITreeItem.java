@@ -8,5 +8,6 @@ public interface ITreeItem {
 	public boolean hasChildren();
 	public String getName();
 	public ITreeItem getParent();
+//	public boolean isStudentsEntry();
 
 }

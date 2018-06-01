@@ -15,6 +15,7 @@ public class StudentsEntry implements ITreeItem {
 	private  String city;
 
 	private  String result;
+	
 
 	transient private  StudentsGroup parent;
 	
@@ -118,4 +119,5 @@ public class StudentsEntry implements ITreeItem {
 			path.append(name);
 		return path.toString();
 	}
+
 }

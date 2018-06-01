@@ -8,7 +8,7 @@ import org.eclipse.ui.IPersistableElement;
 import studentlog.model.StudentsEntry;
 
 public class StudentProfileEditorInput implements IEditorInput {
-	private final static String FACTORY_ID = "rcpapp.StudentProfileEditorInputFactory";
+	private final static String FACTORY_ID = "studentlog.StudentProfileEditorFactory";
 	public final static String FEATURE_ID = "featureId";
 	private final StudentsEntry studentsEntry;
 	private String partisipant;
@@ -68,10 +68,10 @@ public class StudentProfileEditorInput implements IEditorInput {
 		if (!(obj instanceof StudentProfileEditorInput))
 			return false;
 		StudentProfileEditorInput other = (StudentProfileEditorInput) obj;
-		return partisipant.equals(other.partisipant);
+		return studentsEntry.getName().equals(other.getName());
 	}
 
 	public int hashCode() {
-		return partisipant.hashCode();
+		return studentsEntry.getName().hashCode();
 	}
 }
