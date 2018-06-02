@@ -42,27 +42,27 @@ public class TreeModel implements Observable {
 		}
 	}
 	
-	public ITreeItem findNodeByFullPath(String fullPath) {
-		return findNodeByPath(getRoot(), fullPath.substring(1, fullPath.length()));
-	}
-
-	public ITreeItem findNodeByPath(ITreeItem studentsEntry, String path) {
-		boolean isPoint = (path.indexOf("/") == -1) ? true : false; //true-it's target
-		String name=path.split("/")[0]; //name node
-		List<Folder> folders = (List<Folder>) studentsEntry.getChildren(); 
-		for(Folder folder : folders) {
-			List<StudentsGroup> groups = folder.getChildren();
-			for(StudentsGroup group : groups) {
-				List<StudentsEntry> entries = group.getChildren();
-				for(StudentsEntry entry : entries) {
-					String tempPath = folder.getName() + "/" + group.getName() + "/" + entry.getName();
-					if (tempPath.equals(path)) {
-						return entry;
-					}
-				}
-			}
-		}
-		return null;
+//	public ITreeItem findNodeByFullPath(String fullPath) {
+//		return findNodeByPath(getRoot(), fullPath.substring(1, fullPath.length()));
+//	}
+//
+//	public ITreeItem findNodeByPath(ITreeItem studentsEntry, String path) {
+//		boolean isPoint = (path.indexOf("/") == -1) ? true : false; //true-it's target
+//		String name=path.split("/")[0]; //name node
+//		List<Folder> folders = (List<Folder>) studentsEntry.getChildren(); 
+//		for(Folder folder : folders) {
+//			List<StudentsGroup> groups = folder.getChildren();
+//			for(StudentsGroup group : groups) {
+//				List<StudentsEntry> entries = group.getChildren();
+//				for(StudentsEntry entry : entries) {
+//					String tempPath = folder.getName() + "/" + group.getName() + "/" + entry.getName();
+//					if (tempPath.equals(path)) {
+//						return entry;
+//					}
+//				}
+//			}
+//		}
+//		return null;
 //		List<StudentsGroup> groups = folders.get(0).getChildren();
 //		for(StudentsGroup group : groups) {
 //			System.out.println("group name: " + group.getName());
@@ -83,7 +83,7 @@ public class TreeModel implements Observable {
 //			.findFirst().orElse(null);
 //		return (isPoint)?currentNode:findNodeByPath(currentNode,path.substring(name.length()+1, path.length()));
 		
-	}
+//	}
 	
 	
 	

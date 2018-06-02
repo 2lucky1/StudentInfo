@@ -162,27 +162,27 @@ public class StudentsView extends ViewPart implements Observer {
 //			}
 //		});
 //
-//		treeViewer.addDoubleClickListener((event) -> {
-//			selection = treeViewer.getStructuredSelection();
-//			IHandlerService handlerService = getSite().getService(IHandlerService.class);
-//			Object entry = selection.getFirstElement();
-//			if (entry instanceof StudentsEntry) {
-//				try {
-//					handlerService.executeCommand(OpenProfileHandler.ID, null);
-//				} catch (Exception ex) {
-//					throw new RuntimeException(ex.getMessage());
-//				}
-//			} else if(entry instanceof StudentsGroup || entry instanceof Folder){
-//				TreeItem treeItem = treeViewer.getTree().getSelection()[0];
-//				if(treeItem.getExpanded()){
-//					treeItem.setExpanded(false);
-//				}else{
-//					treeItem.setExpanded(true);
-//					treeViewer.refresh();
-//				}
-//				
-//			}
-//		});
+		treeViewer.addDoubleClickListener((event) -> {
+			selection = treeViewer.getStructuredSelection();
+			IHandlerService handlerService = getSite().getService(IHandlerService.class);
+			Object entry = selection.getFirstElement();
+			if (entry instanceof StudentsEntry) {
+				try {
+					handlerService.executeCommand(OpenProfileHandler.ID, null);
+				} catch (Exception ex) {
+					throw new RuntimeException(ex.getMessage());
+				}
+			} else if(entry instanceof StudentsGroup || entry instanceof Folder){
+				TreeItem treeItem = treeViewer.getTree().getSelection()[0];
+				if(treeItem.getExpanded()){
+					treeItem.setExpanded(false);
+				}else{
+					treeItem.setExpanded(true);
+					treeViewer.refresh();
+				}
+				
+			}
+		});
 
 	// treeViewer.getTree().addMouseListener(listener);
 	// DragSource ds = new DragSource(treeViewer.getTree(), DND.DROP_MOVE);
@@ -245,48 +245,48 @@ public class StudentsView extends ViewPart implements Observer {
 		return treeViewer;
 	}
 	
-	protected void createContextMenu(TreeViewer treeViewer) {
-	    MenuManager contextMenu = new MenuManager("#ViewerMenu"); //$NON-NLS-1$
-	    contextMenu.setRemoveAllWhenShown(true);
-	    contextMenu.addMenuListener(new IMenuListener() {
-	        @Override
-	        public void menuAboutToShow(IMenuManager mgr) {
-	            fillContextMenu(mgr);
-	        }
-	    });
+//	protected void createContextMenu(TreeViewer treeViewer) {
+//	    MenuManager contextMenu = new MenuManager("#ViewerMenu"); //$NON-NLS-1$
+//	    contextMenu.setRemoveAllWhenShown(true);
+//	    contextMenu.addMenuListener(new IMenuListener() {
+//	        @Override
+//	        public void menuAboutToShow(IMenuManager mgr) {
+//	            fillContextMenu(mgr);
+//	        }
+//	    });
+//
+//	    Menu menu = contextMenu.createContextMenu(treeViewer.getControl());
+//	    treeViewer.getControl().setMenu(menu);
+//	}
 
-	    Menu menu = contextMenu.createContextMenu(treeViewer.getControl());
-	    treeViewer.getControl().setMenu(menu);
-	}
-
-	/**
-	 * Fill dynamic context menu
-	 *
-	 * @param contextMenu
-	 */
-	protected void fillContextMenu(IMenuManager contextMenu) {
-		IHandlerService handlerService = getSite().getService(IHandlerService.class);
-	    contextMenu.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
-
-	    contextMenu.add(new Action("Do Something") {
-	        @Override
-	        public void run() {
-	            // implement this
-	        }
-	    });
-	    contextMenu.add(new Action("Do Nothing") {
-	        @Override
-	        public void run() {
-	            // don't do anything here
-	        }
-	    });
-	    contextMenu.add(new Action("Delete") {
-	        @Override
-	        public void run() {
-	            // implement this
-	        }
-	    });
-	}
+//	/**
+//	 * Fill dynamic context menu
+//	 *
+//	 * @param contextMenu
+//	 */
+//	protected void fillContextMenu(IMenuManager contextMenu) {
+//		IHandlerService handlerService = getSite().getService(IHandlerService.class);
+//	    contextMenu.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
+//
+//	    contextMenu.add(new Action("Do Something") {
+//	        @Override
+//	        public void run() {
+//	            // implement this
+//	        }
+//	    });
+//	    contextMenu.add(new Action("Do Nothing") {
+//	        @Override
+//	        public void run() {
+//	            // don't do anything here
+//	        }
+//	    });
+//	    contextMenu.add(new Action("Delete") {
+//	        @Override
+//	        public void run() {
+//	            // implement this
+//	        }
+//	    });
+//	}
 
 ////	private class NodeDragListener implements DragSourceListener {
 ////

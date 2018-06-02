@@ -1,24 +1,16 @@
 package studentlog.dnd;
 
-import java.io.IOException;
-
-import org.eclipse.core.commands.Command;
-import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.commands.NotEnabledException;
+import org.eclipse.core.commands.NotHandledException;
+import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.DropTargetListener;
-import org.eclipse.ui.IEditorInput;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.actions.ActionDelegate;
-import org.eclipse.ui.commands.ICommandService;
-import org.eclipse.ui.part.EditorInputTransfer;
+import org.eclipse.ui.handlers.IHandlerService;
 
-import studentlog.actions.MyActionDelegate;
-import studentlog.actions.OpenEditorAction;
-import studentlog.editors.StudentProfileEditor;
+import studentlog.commands.OpenProfileHandler;
 import studentlog.views.StudentsView;
 
 public class MyDropListener implements DropTargetListener {
@@ -38,7 +30,6 @@ public class MyDropListener implements DropTargetListener {
 	@Override
 	public void dragLeave(DropTargetEvent event) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -56,26 +47,17 @@ public class MyDropListener implements DropTargetListener {
 
 	@Override
 	public void drop(DropTargetEvent event) {
-		IWorkbenchPage page = window.getActivePage();
 		System.out.println("----Drop-----");
 		System.out.println(event.data);
-		EditorInputTransfer.EditorInputData[] editorInputs = (EditorInputTransfer.EditorInputData[]) event.data;
-
-		for (int i = 0; i < editorInputs.length; i++) {
-			IEditorInput input = editorInputs[i].input;
-			OpenEditorAction action = new OpenEditorAction(window);
-			action.run();
-//				StudentsView view = (StudentsView)PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().findView("studentlog.views.students");
-//				IStructuredSelection selection = (IStructuredSelection) view.getTreeViewer().getSelection();
-//				
-//				
-//				ICommandService commandService = (ICommandService) PlatformUI.getWorkbench()
-//						.getActiveWorkbenchWindow()
-//						.getService(ICommandService.class);
-//				
-//				Command command = commandService.getCommand("studentlog.commands.AddStudent");
+//		OpenEditorAction action = new OpenEditorAction(window);
+//		action.run();
+		StudentsView view = (StudentsView)window.getActivePage().findView(StudentsView.ID);
+		IHandlerService handlerService = view.getSite().getService(IHandlerService.class);
+		try {
+			handlerService.executeCommand(OpenProfileHandler.ID, null);
+		} catch (Exception ex) {
+			throw new RuntimeException(ex.getMessage());
 		}
-
 	}
 
 	@Override

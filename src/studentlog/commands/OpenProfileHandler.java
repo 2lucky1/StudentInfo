@@ -10,6 +10,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.handlers.HandlerUtil;
 
+import studentlog.actions.OpenEditorAction;
 import studentlog.editors.StudentProfileEditor;
 import studentlog.editors.StudentProfileEditorInput;
 import studentlog.model.StudentsEntry;
@@ -24,13 +25,15 @@ public class OpenProfileHandler extends AbstractHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		window = HandlerUtil.getActiveWorkbenchWindow(event);
+//		OpenEditorAction action = new OpenEditorAction(window);
+//		action.run();
 		IWorkbenchPage page = window.getActivePage();
 		StudentsView view = (StudentsView) page.findView(StudentsView.ID);
 		
 		selection = view.getSite().getSelectionProvider().getSelection();
 		if (selection != null && selection instanceof IStructuredSelection) {
 			Object item = ((IStructuredSelection) selection).getFirstElement();
-			if (item != null) {
+			if (item != null&&item instanceof StudentsEntry) {
 				StudentsEntry entry = (StudentsEntry) item;
 				StudentProfileEditorInput input = new StudentProfileEditorInput(entry);
 				try {					
