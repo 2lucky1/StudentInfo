@@ -47,6 +47,17 @@ public class StudentProfileEditor extends EditorPart {
 		panel = new StudentProfileEditorPanel(parent, SWT.NONE);
 		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 		IWorkbenchPage page = window.getActivePage();
+		try {
+			Object item = page.showView("studentlog.views.students").getSite().getSelectionProvider().getSelection();
+			System.out.println("selected item: " + item);
+			if(item!=null && item instanceof StudentsEntry) {
+				fillEditorArea((StudentsEntry)item);
+			}
+		} catch (PartInitException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 //		TreeViewer treeViewer = new TreeViewer();
 //		treeViewer.setInput(TreeModel.getInstance().getRoot());
