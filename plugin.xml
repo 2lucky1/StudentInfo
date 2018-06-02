@@ -127,54 +127,6 @@
                   label="AddStudent"
                   style="push"
                   tooltip="Add students entry">
-               <visibleWhen>
-                  <with
-                        variable="acttiveMenuSelection">
-                     <iterate>
-                        <adapt
-                              type="studentlog.model.ITreeItem">
-                        </adapt>
-                     </iterate>
-                  </with>
-               </visibleWhen>
-               <visibleWhen>
-                  <with
-                        variable="acttiveMenuSelection">
-                     <iterate>
-                        <adapt
-                              type="studentlog.model.ITreeItem">
-                        </adapt>
-                     </iterate>
-                  </with>
-               </visibleWhen>
-               <visibleWhen
-                     checkEnabled="true">
-                  <with
-                        variable="acttiveMenuSelection">
-                     <iterate>
-                        <adapt
-                              type="studentlog.model.ITreeItem">
-                        </adapt>
-                     </iterate>
-                  </with>
-               </visibleWhen>
-               <visibleWhen
-                     checkEnabled="false">
-                  <with
-                        variable="acttiveMenuSelection">
-                     <iterate>
-                        <adapt
-                              type="studentlog.model.ITreeItem">
-                        </adapt>
-                     </iterate>
-                  </with>
-               </visibleWhen>
-               <visibleWhen
-                     checkEnabled="true">
-                  <with
-                        variable="acttiveMenuSelection">
-                  </with>
-               </visibleWhen>
             </command>
             <command
                   commandId="studentlog.commands.openprofile"
