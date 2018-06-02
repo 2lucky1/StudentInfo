@@ -23,18 +23,14 @@ public class MyDragListener implements DragSourceListener {
 		this.treeViewer = treeViewer;
 	}
 	
-	
 	@Override
 	public void dragStart(DragSourceEvent event) {
 		System.out.println("Drag start");
-
 	}
 
 	@Override
 	public void dragSetData(DragSourceEvent event) {
-		if (EditorInputTransfer.getInstance().isSupportedType(event.dataType)) { // if
-			// support
-			// EditorInputTransfer
+		if (EditorInputTransfer.getInstance().isSupportedType(event.dataType)) { 
 			IStructuredSelection selection = treeViewer.getStructuredSelection();
 			int i = 0;
 			EditorInputTransfer.EditorInputData[] arrData = new EditorInputTransfer.EditorInputData[selection.size()];
@@ -54,7 +50,5 @@ public class MyDragListener implements DragSourceListener {
 		if (event.detail == DND.DROP_MOVE) {
 			System.out.println("Finished Drag");
 		}
-
 	}
-
 }

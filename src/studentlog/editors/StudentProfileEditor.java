@@ -50,33 +50,13 @@ public class StudentProfileEditor extends EditorPart {
 		try {
 			Object item = page.showView("studentlog.views.students").getSite().getSelectionProvider().getSelection();
 			System.out.println("selected item: " + item);
-			if(item!=null && item instanceof StudentsEntry) {
-				fillEditorArea((StudentsEntry)item);
+			if (item != null && item instanceof StudentsEntry) {
+				fillEditorArea((StudentsEntry) item);
 			}
 		} catch (PartInitException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-//		TreeViewer treeViewer = new TreeViewer();
-//		treeViewer.setInput(TreeModel.getInstance().getRoot());
-		
-//		DropTarget dt = new DropTarget(panel, DND.DROP_MOVE);
-//		dt.setTransfer(new Transfer[] { TextTransfer.getInstance() });
-//		dt.addDropListener(new DropTargetAdapter() {
-//			public void drop(DropTargetEvent event) {
-//				StudentsEntry entry = new Gson().fromJson((String) event.data, StudentsEntry.class);
-//				StudentProfileEditorInput input = new StudentProfileEditorInput(entry.getName());
-//				StudentProfileEditor newEditor;
-//				try {
-//					newEditor = (StudentProfileEditor) page.openEditor(input, StudentProfileEditor.ID);
-//					newEditor.getPanel().fillPanelArea(entry);
-//				} catch (PartInitException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
 	}
 
 	public void fillEditorArea(StudentsEntry entry) {
@@ -90,19 +70,17 @@ public class StudentProfileEditor extends EditorPart {
 
 	@Override
 	public void setFocus() {
-		
+
 	}
 
 	@Override
 	public void doSave(IProgressMonitor monitor) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void doSaveAs() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override

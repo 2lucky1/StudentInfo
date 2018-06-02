@@ -32,17 +32,14 @@ public class Root implements ITreeItem {
 	
 	public void addStudentsListener(IStudentsListener listener) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	public void removeStudentsListener(IStudentsListener listener) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	public void fireStudentsChanged(StudentsEntry entry) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	public void addEntry(Folder folder) {

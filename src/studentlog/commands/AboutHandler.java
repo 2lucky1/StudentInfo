@@ -12,8 +12,6 @@ public class AboutHandler extends AbstractHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		
-		
-		System.out.println("About menu");
 		String message = "This program allows you to keep a log of homework."
 				+ " Provides the ability to add, delete students entry,"
 				+ " drug it from the tree and drop to the editor area ."
@@ -24,5 +22,4 @@ public class AboutHandler extends AbstractHandler {
 			dialog.open();
 		return null;
 	}
-
 }

@@ -1,9 +1,5 @@
 package studentlog.dnd;
 
-import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.commands.NotEnabledException;
-import org.eclipse.core.commands.NotHandledException;
-import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.DropTargetListener;
@@ -42,15 +38,10 @@ public class MyDropListener implements DropTargetListener {
 	public void dragOver(DropTargetEvent event) {
 		event.detail = DND.DROP_COPY;
 		event.feedback = DND.FEEDBACK_SELECT;
-
 	}
 
 	@Override
 	public void drop(DropTargetEvent event) {
-		System.out.println("----Drop-----");
-		System.out.println(event.data);
-//		OpenEditorAction action = new OpenEditorAction(window);
-//		action.run();
 		StudentsView view = (StudentsView)window.getActivePage().findView(StudentsView.ID);
 		IHandlerService handlerService = view.getSite().getService(IHandlerService.class);
 		try {
@@ -62,8 +53,5 @@ public class MyDropListener implements DropTargetListener {
 
 	@Override
 	public void dropAccept(DropTargetEvent event) {
-		// TODO Auto-generated method stub
-
 	}
-
 }

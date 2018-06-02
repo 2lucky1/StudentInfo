@@ -11,7 +11,6 @@ import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 import studentlog.dialogs.AddGroupDialog;
@@ -30,10 +29,7 @@ public class AddStudentHandler extends AbstractHandler implements ISelectionList
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindow(event);
-		//IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-		
 		IWorkbenchPage page = window.getActivePage();
-		
 		StudentsView view = (StudentsView) page.findView(StudentsView.ID);
 		
 		treeViewer = view.getTreeViewer();
@@ -41,10 +37,8 @@ public class AddStudentHandler extends AbstractHandler implements ISelectionList
 		selection = treeViewer.getSelection();
 		
 		Object item = ((IStructuredSelection) selection).getFirstElement();
-		
 		if (item instanceof Folder) {
 			AddGroupDialog agd = new AddGroupDialog(window.getShell());
-			
 			int code = agd.open();
 			if (code == Window.OK) {
 				Folder folder = (Folder) item;
@@ -56,7 +50,6 @@ public class AddStudentHandler extends AbstractHandler implements ISelectionList
 			}
 		} else if (item instanceof StudentsGroup) {
 			AddStudentDialog asd = new AddStudentDialog(window.getShell());
-
 			int code = asd.open();
 			if (code == Window.OK) {
 				StudentsGroup group = (StudentsGroup) item;

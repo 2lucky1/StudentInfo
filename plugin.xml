@@ -138,16 +138,7 @@
                commandId="studentlog.commands.AddStudent"
                icon="resources/icons/menubar/plus16x16.png"
                mnemonic="%contributions.view.edit.mnemonic">
-            <visibleWhen>
-               <with
-                     variable="activeMenuSelection">
-                  <iterate>
-                     <adapt
-                           type="studentlog.model.StudentsGroup">
-                     </adapt>
-                  </iterate>
-               </with>
-            </visibleWhen>
+           
          </command>
          <command
                commandId="studentlog.commands.Delete"
@@ -226,13 +217,6 @@
             id="studentlog.editors.studentprofile"
             name="StudentProfile">
       </editor>
-   </extension>
-   <extension
-         point="org.eclipse.ui.elementFactories">
-      <factory
-            class="studentlog.editors.StudentProfileEditorFactory"
-            id="studentlog.StudentProfileEditorFactory">
-      </factory>
    </extension>
 
 </plugin>
