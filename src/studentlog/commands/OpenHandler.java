@@ -14,6 +14,8 @@ import studentlog.services.LogFileAccessManager;
 
 public class OpenHandler extends AbstractHandler {
 
+	private static final String ID = "studentlog.commands.open";
+	
 	private IWorkbenchWindow window;
 
 	@Override

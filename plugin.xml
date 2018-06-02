@@ -54,13 +54,13 @@
                id="fileMenu"
                label="File">
             <command
-                  commandId="studentlog.commands.Exit"
+                  commandId="studentlog.commands.exit"
                   icon="resources/icons/menubar/exit.png"
                   label="Exit"
                   style="push">
             </command>
             <command
-                  commandId="studentlog.commands.Save"
+                  commandId="studentlog.commands.save"
                   icon="resources/icons/menubar/floppy.png"
                   label="Save"
                   style="push">
@@ -70,9 +70,15 @@
                id="editMenu"
                label="Edit">
             <command
-                  commandId="studentlog.commands.Delete"
+                  commandId="studentlog.commands.delete"
                   icon="resources/icons/menubar/basket16x16.png"
                   label="Delete"
+                  style="push">
+            </command>
+            <command
+                  commandId="studentlog.commands.addstudent"
+                  icon="resources/icons/menubar/user16x16.png"
+                  label="Add"
                   style="push">
             </command>
          </menu>
@@ -80,7 +86,7 @@
                id="aboutMenu"
                label="About">
             <command
-                  commandId="studentlog.commands.About"
+                  commandId="studentlog.commands.about"
                   icon="resources/icons/menubar/book16x16.png"
                   label="About"
                   style="push">
@@ -95,35 +101,83 @@
                id="studentlog.commands.Toolbar"
                label="Toolbar">
             <command
-                  commandId="studentlog.commands.Open"
+                  commandId="studentlog.commands.open"
                   icon="resources/icons/toolbar/folder32x32.png"
                   label="Open"
                   style="push"
                   tooltip="Open log from file">
             </command>
             <command
-                  commandId="studentlog.commands.Save"
+                  commandId="studentlog.commands.save"
                   icon="resources/icons/toolbar/floppy32x32.png"
                   label="Save"
                   style="push"
                   tooltip="Save the log to the file">
             </command>
             <command
-                  commandId="studentlog.commands.Delete"
+                  commandId="studentlog.commands.delete"
                   icon="resources/icons/toolbar/basket32x32.png"
                   label="Delete"
                   style="push"
                   tooltip="Delete students entry">
             </command>
             <command
-                  commandId="studentlog.commands.AddStudent"
+                  commandId="studentlog.commands.addstudent"
                   icon="resources/icons/toolbar/plus32x32.png"
                   label="AddStudent"
                   style="push"
                   tooltip="Add students entry">
+               <visibleWhen>
+                  <with
+                        variable="acttiveMenuSelection">
+                     <iterate>
+                        <adapt
+                              type="studentlog.model.ITreeItem">
+                        </adapt>
+                     </iterate>
+                  </with>
+               </visibleWhen>
+               <visibleWhen>
+                  <with
+                        variable="acttiveMenuSelection">
+                     <iterate>
+                        <adapt
+                              type="studentlog.model.ITreeItem">
+                        </adapt>
+                     </iterate>
+                  </with>
+               </visibleWhen>
+               <visibleWhen
+                     checkEnabled="true">
+                  <with
+                        variable="acttiveMenuSelection">
+                     <iterate>
+                        <adapt
+                              type="studentlog.model.ITreeItem">
+                        </adapt>
+                     </iterate>
+                  </with>
+               </visibleWhen>
+               <visibleWhen
+                     checkEnabled="false">
+                  <with
+                        variable="acttiveMenuSelection">
+                     <iterate>
+                        <adapt
+                              type="studentlog.model.ITreeItem">
+                        </adapt>
+                     </iterate>
+                  </with>
+               </visibleWhen>
+               <visibleWhen
+                     checkEnabled="true">
+                  <with
+                        variable="acttiveMenuSelection">
+                  </with>
+               </visibleWhen>
             </command>
             <command
-                  commandId="studentlog.commands.OpenProfile"
+                  commandId="studentlog.commands.openprofile"
                   icon="resources/icons/toolbar/user 32x32.png"
                   label="OpenProfile"
                   style="push"
@@ -135,13 +189,13 @@
       <menuContribution
             locationURI="popup:org.eclipse.ui.popup.any">
          <command
-               commandId="studentlog.commands.AddStudent"
+               commandId="studentlog.commands.addstudent"
                icon="resources/icons/menubar/plus16x16.png"
                mnemonic="%contributions.view.edit.mnemonic">
            
          </command>
          <command
-               commandId="studentlog.commands.Delete"
+               commandId="studentlog.commands.delete"
                icon="resources/icons/menubar/basket16x16.png"
                label="Delete"
                style="push">
@@ -153,7 +207,7 @@
             </visibleWhen>
          </command>
          <command
-               commandId="studentlog.commands.OpenProfile"
+               commandId="studentlog.commands.openprofile"
                icon="resources/icons/menubar/user16x16.png"
                label="Open profile"
                style="push">
@@ -175,36 +229,36 @@
          point="org.eclipse.ui.commands">
       <command
             defaultHandler="studentlog.commands.DeleteHandler"
-            id="studentlog.commands.Delete"
+            id="studentlog.commands.delete"
             name="Delete">
       </command> <command
             defaultHandler="studentlog.commands.ExitHandler"
-            id="studentlog.commands.Exit"
+            id="studentlog.commands.exit"
             name="Exit">
       </command>
       <command
             defaultHandler="studentlog.commands.SaveHandler"
-            id="studentlog.commands.Save"
+            id="studentlog.commands.save"
             name="Save">
       </command>
       <command
             defaultHandler="studentlog.commands.AboutHandler"
-            id="studentlog.commands.About"
+            id="studentlog.commands.about"
             name="About">
       </command>
       <command
             defaultHandler="studentlog.commands.OpenHandler"
-            id="studentlog.commands.Open"
+            id="studentlog.commands.open"
             name="Open">
       </command>
       <command
             defaultHandler="studentlog.commands.AddStudentHandler"
-            id="studentlog.commands.AddStudent"
+            id="studentlog.commands.addstudent"
             name="AddStudent">
       </command>
       <command
             defaultHandler="studentlog.commands.OpenProfileHandler"
-            id="studentlog.commands.OpenProfile"
+            id="studentlog.commands.openprofile"
             name="OpenProfile">
       </command>
    </extension>
@@ -217,6 +271,51 @@
             id="studentlog.editors.studentprofile"
             name="StudentProfile">
       </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="studentlog.commands.about"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+A">
+      </key>
+      <key
+            commandId="studentlog.commands.exit"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+Q">
+      </key>
+      <key
+            commandId="studentlog.commands.save"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+S">
+      </key>
+      <key
+            commandId="studentlog.commands.addstudent"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+N">
+      </key>
+      <key
+            commandId="studentlog.commands.openprofile"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+E">
+      </key>
+      <key
+            commandId="studentlog.commands.open"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+O">
+      </key>
+      <key
+            commandId="studentlog.commands.delete"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+D">
+      </key>
    </extension>
 
 </plugin>

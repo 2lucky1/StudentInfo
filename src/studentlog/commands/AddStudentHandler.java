@@ -22,6 +22,8 @@ import studentlog.views.StudentsView;
 
 public class AddStudentHandler extends AbstractHandler implements ISelectionListener {
 
+	private static final String ID = "studentlog.commands.addstudent";
+	
 	private static final String GROUP = "Group";
 	private TreeViewer treeViewer;
 	private ISelection selection;

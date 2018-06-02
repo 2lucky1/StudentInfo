@@ -7,6 +7,8 @@ import org.eclipse.ui.handlers.HandlerUtil;
 
 public class ExitHandler extends AbstractHandler {
 
+	private static final String ID = "studentlog.commands.exit";
+	
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		HandlerUtil.getActiveWorkbenchWindow(event).close();

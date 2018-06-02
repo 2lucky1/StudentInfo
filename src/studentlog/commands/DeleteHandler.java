@@ -16,6 +16,8 @@ import studentlog.model.ITreeItem;
 import studentlog.views.StudentsView;
 
 public class DeleteHandler extends AbstractHandler implements ISelectionChangedListener {
+	private static final String ID = "studentlog.commands.delete";
+	
 	private IWorkbenchWindow window;
 	private TreeViewer treeViewer;
 	private ISelection selection;

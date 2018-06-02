@@ -9,6 +9,8 @@ import org.eclipse.ui.handlers.HandlerUtil;
 
 public class AboutHandler extends AbstractHandler {
 
+	private static final String ID = "studentlog.commands.about";
+	
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		

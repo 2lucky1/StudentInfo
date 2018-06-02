@@ -13,6 +13,8 @@ import studentlog.services.LogFileAccessManager;
 
 public class SaveHandler extends AbstractHandler {
 
+	private static final String ID = "studentlog.commands.save";
+	
 	private IWorkbenchWindow window;
 	
 	@Override
