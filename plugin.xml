@@ -218,7 +218,7 @@
          point="org.eclipse.ui.editors">
       <editor
             class="studentlog.editors.StudentProfileEditor"
-            default="false"
+            default="true"
             icon="resources/icons/tree/head.png"
             id="studentlog.editors.studentprofile"
             name="StudentProfile">

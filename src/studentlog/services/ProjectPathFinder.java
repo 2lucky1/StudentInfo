@@ -11,7 +11,7 @@ public class ProjectPathFinder {
 
 	public static String getProjectAbsolutePath() {
 		Bundle bundle = FrameworkUtil.getBundle(ProjectPathFinder.class);
-		URL projectURL = bundle.getEntry("");
+		URL projectURL = bundle.getEntry(""); 
 
 		String projectAbsolutePath = null;
 		try {

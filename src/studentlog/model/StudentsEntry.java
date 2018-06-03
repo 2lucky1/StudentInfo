@@ -4,18 +4,19 @@ import java.util.List;
 
 public class StudentsEntry implements ITreeItem {
 
-	private  String name;
-	private  String groupNumber;
-	private  String address;
-	private  String city;
-	private  String result;
-	
-	transient private  StudentsGroup parent;
-	
-	public StudentsEntry(){
-		
+	private String name;
+	private String groupNumber;
+	private String address;
+	private String city;
+	private String result;
+	private String imagePath;
+
+	transient private StudentsGroup parent;
+
+	public StudentsEntry() {
+
 	}
-	
+
 	public StudentsEntry(String name, String groupNumber, String address, String city, String result,
 			StudentsGroup group) {
 		super();
@@ -47,6 +48,16 @@ public class StudentsEntry implements ITreeItem {
 		return parent;
 	}
 
+	
+	
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
 	@Override
 	public String getName() {
 		return name;
@@ -61,7 +72,7 @@ public class StudentsEntry implements ITreeItem {
 	public List<?> getChildren() {
 		return null;
 	}
-	
+
 	@Override
 	public boolean hasChildren() {
 		return false;
