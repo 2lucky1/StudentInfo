@@ -42,7 +42,7 @@ public class ProjectPathFinder {
 	}
 	
 	public static String getStudentsPictures() {
-		return getResourcesFolderPath() + "student_pictures/";
+		return getResourcesFolderPath() + "students_pictures/";
 	}
 	
 }
