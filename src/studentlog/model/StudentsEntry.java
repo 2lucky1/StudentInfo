@@ -1,6 +1,8 @@
 package studentlog.model;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 public class StudentsEntry implements ITreeItem {
 
@@ -48,8 +50,6 @@ public class StudentsEntry implements ITreeItem {
 		return parent;
 	}
 
-	
-	
 	public String getImagePath() {
 		return imagePath;
 	}
@@ -100,5 +100,27 @@ public class StudentsEntry implements ITreeItem {
 
 	public void setParent(StudentsGroup parent) {
 		this.parent = parent;
+	}
+	
+	public String fullPath(){
+		StringBuilder path=new StringBuilder("");
+		List<String> listPath=new ArrayList<>();
+		ITreeItem currentNode=this;
+		
+		while(currentNode.getParent()!=null){
+			listPath.add(currentNode.getParent().getName());
+			currentNode=currentNode.getParent();
+		}
+		
+		ListIterator<String> itr=listPath.listIterator(listPath.size());
+		itr.previous();
+		path.append("/");
+		while(itr.hasPrevious()){
+			String previous=itr.previous();
+			path.append(previous);
+			path.append("/");
+			}
+			path.append(name);
+		return path.toString();
 	}
 }

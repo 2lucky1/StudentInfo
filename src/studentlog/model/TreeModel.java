@@ -41,6 +41,27 @@ public class TreeModel implements Observable {
 			observer.update(root);
 		}
 	}
+	
+	public ITreeItem findNodeByFullPath(String fullPath) {
+		return findNodeByPath(getRoot(), fullPath.substring(1, fullPath.length()));
+	}
+
+	public ITreeItem findNodeByPath(ITreeItem studentsEntry, String path) {
+		List<Folder> folders = (List<Folder>) studentsEntry.getChildren(); 
+		for(Folder folder : folders) {
+			List<StudentsGroup> groups = folder.getChildren();
+			for(StudentsGroup group : groups) {
+				List<StudentsEntry> entries = group.getChildren();
+				for(StudentsEntry entry : entries) {
+					String tempPath = folder.getName() + "/" + group.getName() + "/" + entry.getName();
+					if (tempPath.equals(path)) {
+						return entry;
+					}
+				}
+			}
+		}
+		return null;
+	}
 
 	public Root getRoot() {
 		return root;
@@ -57,7 +78,6 @@ public class TreeModel implements Observable {
 
 	private void initTreeModel() {
 		logFileAccessManager = new LogFileAccessManager();
-		System.out.println(getLogFilePath());
 		root = logFileAccessManager.readLogItemsFromFile(getLogFilePath());
 		setRoot(root);
 	}

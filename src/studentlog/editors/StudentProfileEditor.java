@@ -5,10 +5,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.EditorPart;
 
 import studentlog.model.StudentsEntry;
@@ -28,24 +25,11 @@ public class StudentProfileEditor extends EditorPart {
 		setSite(site);
 		setInput(input);
 		setPartName(getUser());
-
 	}
 
 	@Override
 	public void createPartControl(Composite parent) {
 		panel = new StudentProfileEditorPanel(parent, SWT.NONE);
-		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-		IWorkbenchPage page = window.getActivePage();
-		try {
-			Object item = page.showView("studentlog.views.students").getSite().getSelectionProvider().getSelection();
-			System.out.println("selected item: " + item);
-			if (item != null && item instanceof StudentsEntry) {
-				fillEditorArea((StudentsEntry) item);
-			}
-		} catch (PartInitException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	public void fillEditorArea(StudentsEntry entry) {
@@ -59,17 +43,19 @@ public class StudentProfileEditor extends EditorPart {
 
 	@Override
 	public void setFocus() {
-
+		
 	}
 
 	@Override
 	public void doSave(IProgressMonitor monitor) {
 		// TODO Auto-generated method stub
+
 	}
 
 	@Override
 	public void doSaveAs() {
 		// TODO Auto-generated method stub
+
 	}
 
 	@Override

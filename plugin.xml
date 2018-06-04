@@ -269,5 +269,12 @@
             sequence="M1+D">
       </key>
    </extension>
+   <extension
+         point="org.eclipse.ui.elementFactories">
+      <factory
+            class="studentlog.editors.StudentProfileEditorFactory"
+            id="studentlog.studentsprofileeditorfactory">
+      </factory>
+   </extension>
 
 </plugin>
