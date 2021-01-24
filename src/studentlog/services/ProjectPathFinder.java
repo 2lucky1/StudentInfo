@@ -19,7 +19,7 @@ public class ProjectPathFinder {
 //			filePath = Platform.resolve(pluginInternalURL).getFile(); pre 3.2 eclipse version
 			
 			projectAbsolutePath = FileLocator.resolve(projectURL).getFile(); //after 3.2 eclipse version
-			if (projectAbsolutePath.charAt(0) == '\\' || projectAbsolutePath.charAt(0) == '/') { 
+			if (projectAbsolutePath.charAt(0) == '\\') { 
 				projectAbsolutePath = projectAbsolutePath.substring(1); 
 			} 
 			return projectAbsolutePath;
